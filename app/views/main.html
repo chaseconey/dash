@@ -1,0 +1,63 @@
+<div class="row-fluid">
+    <div class="span9">
+
+        <div id="mysql" class="span6">
+          <div class="inputs">
+              <input type="text" ng-model="username" placeholder="username"><br>
+              <div class="input-append">
+                  <input type="text" ng-model="password" placeholder="password" ng-change="setHash()">
+                  <button class="btn" ng-click="gen(); setHash();">Generate</button>
+              </div>
+              <code>MD5: {{hashed}}</code><br>
+              <input type="text" ng-model="database" placeholder="database"><br><br>
+
+              <pre class="code">
+CREATE USER '{{username || "username"}}'@'localhost' IDENTIFIED BY '{{password || "password"}}';
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER ON `{{database || "database"}}`.* TO '{{username}}'@'localhost';
+FLUSH PRIVILEGES;</pre>
+          </div>
+      </div>
+
+
+    </div>
+
+    <!-- History -->
+    <div class="span3">
+        <h2>History</h2>
+        <ul class="unstyled history">
+            <li>
+            <div class="media">
+              <a class="pull-left" href="#">
+                <img class="media-object" src="/images/64x64.png">
+              </a>
+              <div class="media-body">
+                <h4 class="media-heading">Elite Meetings</h4>
+                MD5 Hash was created
+              </div>
+            </div>
+            </li>
+            <li>
+            <div class="media">
+              <a class="pull-left" href="#">
+                <img class="media-object" src="/images/64x64.png">
+              </a>
+              <div class="media-body">
+                <h4 class="media-heading">Elite Meetings</h4>
+                MD5 Hash was created
+              </div>
+            </div>
+            </li>
+            <li>
+            <div class="media">
+              <a class="pull-left" href="#">
+                <img class="media-object" src="/images/64x64.png">
+              </a>
+              <div class="media-body">
+                <h4 class="media-heading">Elite Meetings</h4>
+                MD5 Hash was created
+              </div>
+            </div>
+            </li>
+        </ul>
+    </div>
+</div>
