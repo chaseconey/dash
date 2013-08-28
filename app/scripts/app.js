@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dashv2App', [])
+angular.module('dashv2App', ['LocalStorageModule'])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
