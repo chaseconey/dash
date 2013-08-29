@@ -3,13 +3,13 @@
 describe('Controller: MainCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('dashv2App'));
+  beforeEach(module('dashv2App', 'mockedStorage'));
 
   var MainCtrl,
     scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
+  beforeEach(inject(function ($controller, $rootScope, defaultStorage) {
     scope = $rootScope.$new();
     MainCtrl = $controller('MainCtrl', {
       $scope: scope
