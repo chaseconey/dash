@@ -1,8 +1,27 @@
 $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
+/** Vars **/
+$theme1: #ecf0f1;
+$theme2: #34495e;
+$border: #ecf0f1;
+
+/** Bootstrap Vars **/
+$navbarBackground: $theme2;
+$navbarBackgroundHighlight: lighten($navbarBackground, 10);
+$navbarLinkColor: white;
+$navbarLinkColorHover: white;
+$navbarLinkColorActive: white;
+$bodyBackground: #000;
+$dropdownBackground: $theme2;
+$dropdownLinkColor: white;
+$hrBorder: $theme2;
+$heroUnitBackground: lighten($theme1, 20);
+$dropdownLinkColorHover: $theme1;
+
 @import "bootstrap-sass/lib/bootstrap";
 @import url(http://fonts.googleapis.com/css?family=Vollkorn);
+@import "mixins.scss";
 
 /* Put your CSS here */
 html, body {
@@ -56,4 +75,33 @@ ul.history li {
     font-size: 60px;
     line-height: 1;
     letter-spacing: -1px;
+}
+
+.done-true {
+    text-decoration: line-through;
+}
+
+.project {
+    border: 1px solid $border;
+    border-radius: 5px;
+    margin-top: 10px;
+
+    .title {
+        margin-top: 0px;
+        padding: 0px 5px 0px 5px;
+        text-align: center;
+        background-color: $theme1;
+        h3 {
+            margin-top: 0;
+        }
+    }
+    .addIcon {
+        cursor: pointer;
+    }
+    ul {
+        padding: 0 5px 0 5px;
+        li {
+            font-size: 1.5em;
+        }
+    }
 }

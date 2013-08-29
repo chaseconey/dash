@@ -1,0 +1,41 @@
+<div class="row-fluid">
+    <div class="span9">
+
+        <div id="mysql" class="span6">
+          <div class="inputs">
+              <input type="text" ng-model="username" placeholder="username"><br>
+              <div class="input-append">
+                  <input type="text" ng-model="password" placeholder="password" ng-change="setHash()">
+                  <button class="btn" ng-click="gen(); setHash();">Generate</button>
+              </div>
+              <code>MD5: {{hashed}}</code><br>
+              <input type="text" ng-model="database" placeholder="database"><br><br>
+
+              <pre class="code">
+CREATE USER '{{username || "username"}}'@'localhost' IDENTIFIED BY '{{password || "password"}}';
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER ON `{{database || "database"}}`.* TO '{{username}}'@'localhost';
+FLUSH PRIVILEGES;</pre>
+          </div>
+          <button class="btn btn-primary" ng-click="saveHash()">Save</button>
+      </div>
+
+
+    </div>
+
+    <!-- History -->
+    <div class="span3">
+        <button class="btn btn-danger pull-right" ng-click="clearHistory()">Clear</button>
+        <ul class="unstyled history">
+            <li ng-repeat="item in dbhistory">
+            <div class="media">
+              <div class="media-body">
+                <h4 class="media-heading">
+                  <a ng-click="populateBox($index)" href="">{{ item.database }}</a> <small>{{ item.date | date:'short' }}</small>
+                </h4>
+                {{ item.username }} - {{ item.password }}
+              </div>
+            </div>
+            </li>
+        </ul>
+    </div>
+</div>

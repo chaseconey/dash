@@ -1,50 +1,48 @@
 'use strict';
 
 angular.module('dashv2App')
-  .controller('MainCtrl', ['$scope', 'Utils', 'Sugar', 'localStorageService', function ($scope, utils, sugar, localStorageService) {
+  .controller('MainCtrl', ['$scope', 'localStorageService', function ($scope, localStorageService) {
 
-    $scope.hashed = localStorageService.get('hashed') || '';
-    $scope.username = localStorageService.get('username') || '';
-    $scope.password = localStorageService.get('password') || '';
-    $scope.database = localStorageService.get('database') || '';
-    $scope.dbhistory = localStorageService.get('dbhistory') || [];
+    $scope.projects = localStorageService.get('projects') || [];
 
-    // Tool Functions
-    $scope.setHash = function() {
-      this.hashed = $.md5(this.password);
+    $scope.addProject = function() {
+      var proj = {
+          name: $scope.newProject.name,
+          priority: $scope.newProject.priority,
+          shown: true,
+          todos: []
+      };
+
+      $scope.projects.push(proj);
+      localStorageService.add('projects', JSON.stringify($scope.projects));
+
+      $('#addProject').modal('toggle');
+      $scope.newProject.name = '';
+      $scope.newProject.priority = '';
     };
 
-    $scope.gen = function() {
-      this.password = utils.generate();
-    };
-
-    $scope.saveHash = function() {
-      $scope.dbhistory.unshift({
-        username : $scope.username,
-        password : $scope.password,
-        database : $scope.database,
-        date : new Date()
+    $scope.archive = function(index) {
+      var oldTodos = $scope.projects[index].todos;
+      $scope.projects[index].todos = [];
+      angular.forEach(oldTodos, function(todo) {
+          if (!todo.done) $scope.projects[index].todos.push(todo);
       });
-      localStorageService.add('dbhistory', JSON.stringify($scope.dbhistory));
     };
 
-    $scope.clearHistory = function() {
-      $scope.dbhistory = [];
-      localStorageService.remove('dbhistory');
+    $scope.addTodo = function(index) {
+      var project = $scope.projects[index];
+      if(project.todos === undefined) {
+          project.todos = [];
+      }
+      project.todos.push({
+          text: 'test',
+          done: false
+      });
+      localStorageService.add('projects', JSON.stringify($scope.projects));
     };
 
-    $scope.populateBox = function(index) {
-      var data = $scope.dbhistory[index];
-      $scope.username = data.username;
-      $scope.password = data.password;
-      $scope.database = data.database;
-    };
-
-    $scope.$watch(function() {
-      localStorageService.add('hashed', $scope.hashed);
-      localStorageService.add('username', $scope.username);
-      localStorageService.add('password', $scope.password);
-      localStorageService.add('database', $scope.database);
-    });
-
+    $scope.hideProjectInfo = function(index) {
+      $scope.projects[index].shown = !$scope.projects[index].shown
+      $('#project-' + index + " .todos").toggle();
+    }
   }]);

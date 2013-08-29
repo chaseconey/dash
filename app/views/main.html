@@ -1,41 +1,44 @@
-<div class="row-fluid">
-    <div class="span9">
-
-        <div id="mysql" class="span6">
-          <div class="inputs">
-              <input type="text" ng-model="username" placeholder="username"><br>
-              <div class="input-append">
-                  <input type="text" ng-model="password" placeholder="password" ng-change="setHash()">
-                  <button class="btn" ng-click="gen(); setHash();">Generate</button>
-              </div>
-              <code>MD5: {{hashed}}</code><br>
-              <input type="text" ng-model="database" placeholder="database"><br><br>
-
-              <pre class="code">
-CREATE USER '{{username || "username"}}'@'localhost' IDENTIFIED BY '{{password || "password"}}';
-GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER ON `{{database || "database"}}`.* TO '{{username}}'@'localhost';
-FLUSH PRIVILEGES;</pre>
-          </div>
-          <button class="btn btn-primary" ng-click="saveHash()">Save</button>
-      </div>
-
-
-    </div>
-
-    <!-- History -->
-    <div class="span3">
-        <button class="btn btn-danger pull-right" ng-click="clearHistory()">Clear</button>
-        <ul class="unstyled history">
-            <li ng-repeat="item in dbhistory">
-            <div class="media">
-              <div class="media-body">
-                <h4 class="media-heading">
-                  <a ng-click="populateBox($index)" href="">{{ item.database }}</a> <small>{{ item.date | date:'short' }}</small>
-                </h4>
-                {{ item.username }} - {{ item.password }}
-              </div>
+<div class="row">
+    <a href="#addProject" role="button" class="btn" data-toggle="modal">Add Project</a>
+    <div class="row">
+        <div id="project-{{ $index }}" class="span6 project" ng-repeat="project in projects">
+            <div class="title">
+                <h3 class="dark" ng-click="hideProjectInfo($index)">{{ project.name }} [{{ project.priority }}]</h3>
+                <span class="addIcon pull-right" ng-click="addTodo($index)"><i class="icon-plus"></i></span>
+                <span class="addIcon pull-right" ng-click="archive($index)"><i class="icon-folder-open"></i></span>
             </div>
-            </li>
-        </ul>
+            <div class="todos" ng-show="project.shown">
+                <ul class="unstyled">
+                    <li ng-repeat="todo in project.todos">
+                        <input type="checkbox" ng-model="todo.done">
+                        <span class="done-{{ todo.done }}">{{ todo.text }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addProject" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h3>
+            Add Project
+        </h3>
+    </div>
+    <div class="modal-body">
+        <input name="name" type="text" ng-model="newProject.name" placeholder="Project Name" required><br>
+        <select ng-model="newProject.priority">
+            <option value=""></option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary" ng-click="addProject()">Save changes</button>
     </div>
 </div>

@@ -7,6 +7,10 @@ angular.module('dashv2App', ['LocalStorageModule'])
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/tools', {
+        templateUrl: 'views/tools.html',
+        controller: 'ToolsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
