@@ -58,6 +58,7 @@ angular.module('dashv2App')
     $scope.doneEditing = function(todo){
       todo.editing=false;
       $scope.editedTodo = null;
+      localStorageService.add('projects', JSON.stringify($scope.projects));
     };
 
     $scope.hideProjectInfo = function(index) {
