@@ -15,9 +15,13 @@
   <body ng-app="dashv2App">
     <h1 class="heading">EpiUtils</h1>
     <div class="container-fluid">
+        <ul class="breadcrumb">
+          <li><a href="#/">Todos</a> <span class="divider">/</span></li>
+          <li><a href="#/tools">Tools</a>
+        </ul>
 
-      <!-- Add your site or application content here -->
-      <div ng-view=""></div>
+        <!-- Add your site or application content here -->
+        <div ng-view=""></div>
     </div>
 
     <script src="bower_components/jquery/jquery.js"></script>
@@ -53,6 +57,7 @@
     <script src="scripts/services/utils.js"></script>
     <script src="scripts/services/sugar.js"></script>
     <script src="scripts/controllers/tools.js"></script>
+    <script src="scripts/directives/interface.js"></script>
     <!-- endbuild -->
 </body>
 </html>

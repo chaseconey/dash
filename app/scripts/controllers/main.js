@@ -21,12 +21,20 @@ angular.module('dashv2App')
       $scope.newProject.priority = '';
     };
 
+    $scope.deleteProject = function(index) {
+      $scope.displayLocationDeletePopup = false;
+
+      $scope.projects.splice(index, 1);
+      localStorageService.add('projects', JSON.stringify($scope.projects));
+    }
+
     $scope.archive = function(index) {
       var oldTodos = $scope.projects[index].todos;
       $scope.projects[index].todos = [];
       angular.forEach(oldTodos, function(todo) {
           if (!todo.done) $scope.projects[index].todos.push(todo);
       });
+      localStorageService.add('projects', JSON.stringify($scope.projects));
     };
 
     $scope.addTodo = function(index) {
@@ -35,14 +43,33 @@ angular.module('dashv2App')
           project.todos = [];
       }
       project.todos.push({
-          text: 'test',
-          done: false
+          text: '',
+          done: false,
+          editing: true
       });
       localStorageService.add('projects', JSON.stringify($scope.projects));
     };
 
+    $scope.startEditing = function(todo) {
+      todo.editing=true;
+      $scope.editedTodo = todo;
+    };
+
+    $scope.doneEditing = function(todo){
+      todo.editing=false;
+      $scope.editedTodo = null;
+    };
+
     $scope.hideProjectInfo = function(index) {
       $scope.projects[index].shown = !$scope.projects[index].shown
-      $('#project-' + index + " .todos").toggle();
-    }
+    };
+
+    $scope.showDeleteLocationPopup = function(options, id) {
+      if (options === true) {
+          $scope.displayLocationDeletePopup = true;
+      } else {
+          $scope.displayLocationDeletePopup = false;
+      }
+      $scope.projectId = id;
+    };
   }]);
