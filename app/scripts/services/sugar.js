@@ -30,7 +30,7 @@ angular.module('dashv2App')
       console.log(params);
 
 
-      $http.post(url, data).success(function(data, status, headers, config) {
+      $http.post(url, data).success(function(data) {
         console.log(data);
       });
     };

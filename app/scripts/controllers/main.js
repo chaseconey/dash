@@ -11,7 +11,7 @@ angular.module('dashv2App')
           priority: $scope.newProject.priority,
           shown: true,
           todos: []
-      };
+        };
 
       $scope.projects.push(proj);
       localStorageService.add('projects', JSON.stringify($scope.projects));
@@ -26,27 +26,33 @@ angular.module('dashv2App')
 
       $scope.projects.splice(index, 1);
       localStorageService.add('projects', JSON.stringify($scope.projects));
-    }
+    };
 
     $scope.archive = function(index) {
       var oldTodos = $scope.projects[index].todos;
       $scope.projects[index].todos = [];
       angular.forEach(oldTodos, function(todo) {
-          if (!todo.done) $scope.projects[index].todos.push(todo);
-      });
+          if (!todo.done) {
+            $scope.projects[index].todos.push(todo);
+          }
+        }
+      );
       localStorageService.add('projects', JSON.stringify($scope.projects));
     };
 
     $scope.addTodo = function(index) {
       var project = $scope.projects[index];
       if(project.todos === undefined) {
-          project.todos = [];
+        project.todos = [];
       }
+
       project.todos.push({
           text: '',
           done: false,
           editing: true
-      });
+        }
+      );
+
       localStorageService.add('projects', JSON.stringify($scope.projects));
     };
 
@@ -62,14 +68,14 @@ angular.module('dashv2App')
     };
 
     $scope.hideProjectInfo = function(index) {
-      $scope.projects[index].shown = !$scope.projects[index].shown
+      $scope.projects[index].shown = !$scope.projects[index].shown;
     };
 
     $scope.showDeleteLocationPopup = function(options, id) {
       if (options === true) {
-          $scope.displayLocationDeletePopup = true;
+        $scope.displayLocationDeletePopup = true;
       } else {
-          $scope.displayLocationDeletePopup = false;
+        $scope.displayLocationDeletePopup = false;
       }
       $scope.projectId = id;
     };
