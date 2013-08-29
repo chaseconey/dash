@@ -16,7 +16,26 @@ describe('Controller: MainCtrl', function () {
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+  describe('MainCtrl spec', function() {
+
+    it('archive() should remove todos from the list that are done', function () {
+      scope.projects = [
+        {
+          name : 'Test Project',
+          todos : [
+            { text : 'todo1', done : false, editing : false },
+            { text : 'todo2', done : true, editing : false },
+            { text : 'todo3', done : false, editing : false },
+            { text : 'todo4', done : true, editing : false },
+            { text : 'todo5', done : false, editing : false }
+          ]
+        }
+      ];
+
+      scope.archive(0);
+
+      expect(scope.projects[0].todos.length.toEqual(3));
+    });
+
   });
 });
